@@ -17,6 +17,7 @@ def main():
 if __name__ == "__main__":
     main()
 
+###
 from src.api.client import search_apple_music
 
 def main():
@@ -30,6 +31,29 @@ def main():
             print(f"- {song['attributes']['name']} by {song['attributes']['artistName']}")
     else:
         print("No se encontraron resultados para la búsqueda.")
+
+if __name__ == "__main__":
+    main()
+###
+###
+import json
+from src.api.client import fetch_song_data
+
+def save_to_file(data, filename="songs.json"):
+    with open(filename, "w") as f:
+        json.dump(data, f, indent=4)
+
+def main():
+    print("Buscando y guardando datos...")
+    term = input("Introduce un término de búsqueda (artista, canción, etc.): ")
+    songs = fetch_song_data(term, storefront="mx", limit=10)
+
+    if songs:
+        print(f"Se encontraron {len(songs)} canciones.")
+        save_to_file(songs)
+        print(f"Datos guardados en 'songs.json")
+    else:
+        print("No se encontraron canciones.")
 
 if __name__ == "__main__":
     main()
