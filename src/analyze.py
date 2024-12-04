@@ -12,8 +12,15 @@ def analyze_genre_distribution(songs):
     genres = [genre for song in songs for genre in song.get("genre", [])]
     genre_counts = {genre: genres.count(genre) for genre in set(genres)}
 
-    print("Distribución de géneros en la playlist:")
-    for genre, count in genre_counts.items():
-        print(f"{genre}: {count} canciones")
-
     return genre_counts
+
+def analyze_avg_duration_by_genre(songs):
+    genre_durations = {}
+    for song in songs:
+        for genre in song.get("genre", []):
+            if genre not in genre_durations:
+                genre_durations[genre] = []
+            genre_durations[genre].append(song.get("duration_ms", 0) / 60000)
+    avg_durations = {genre: sum(durations) / len(durations) for genre, durations in genre_durations.items()}
+
+    return avg_durations
