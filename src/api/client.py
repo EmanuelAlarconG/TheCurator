@@ -96,3 +96,32 @@ def fetch_playlist_data(playlist_id, storefront="us"):
     except requests.exceptions.RequestException as e:
         print(f"Error al realizar la solicitud: {e}")
         return []
+    
+def search_similar_songs(query, limit=5, storefront="mx"):
+    token = generate_token()
+    url = f"https://api.music.apple.com/v1/catalog/{storefront}/search"
+    headers = {"Authorization": f"Bearer {token}"}
+    params = {
+        "term": query,
+        "types": "songs",
+        "limit": limit
+    }
+
+    try:
+        response = requests.get(url, headers=headers, params=params)
+        response.raise_for_status()
+        results = response.json()
+        songs = results.get("results", {}).get("songs", {}).get("data", [])
+        return [
+            {
+                "name": song["attributes"]["name"],
+                "artist": song["attributes"]["artistName"],
+                "album": song["attributes"]["albumName"],
+                "genre": song["attributes"].get("genreNames", []),
+                "url": song["attributes"]["url"]
+            }
+            for song in songs
+        ]
+    except requests.exceptions.RequestException as e:
+        print(f"Error al realizar la búsqueda: {e}")
+        return []
