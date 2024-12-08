@@ -10,12 +10,16 @@ from visualize import plot_genre_distribution
 from analyze import (
     load_playlist_data,
     analyze_genre_distribution,
-    analyze_avg_duration_by_genre
+    analyze_avg_duration_by_genre,
+    analyze_year_of_distribution,
+    analyze_top_artists
 )
 
 from visualize import(
     plot_genre_distribution,
-    plot_avg_duration_by_genre
+    plot_avg_duration_by_genre,
+    plot_release_year_distribution,
+    plot_top_artists
 )
 
 
@@ -46,6 +50,12 @@ def analyze_playlist():
 
     avg_durations = analyze_avg_duration_by_genre(songs)
     plot_avg_duration_by_genre(avg_durations)
+
+    year_counts = analyze_year_of_distribution(songs)
+    plot_release_year_distribution(year_counts)
+
+    artist_counts = analyze_top_artists(songs)
+    plot_top_artists(artist_counts)
 
 def main():
     print("Bienvenido al sistema de análisis de Apple Music")

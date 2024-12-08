@@ -24,3 +24,17 @@ def analyze_avg_duration_by_genre(songs):
     avg_durations = {genre: sum(durations) / len(durations) for genre, durations in genre_durations.items()}
 
     return avg_durations
+
+def analyze_year_of_distribution(songs):
+    release_years = [song.get("release_date", "")[:4] for song in songs if song.get("release_date")]
+    year_counts = {year: release_years.count(year) for year in set(release_years)}
+    
+    return year_counts
+
+def analyze_top_artists(songs):
+    artist_counts = {}
+    for song in songs:
+        artist = song.get("artist", "Desconocido")
+        artist_counts[artist] = artist_counts.get(artist, 0) + 1
+
+    return dict(sorted(artist_counts.items(), key=lambda x: x[1], reverse=True)[:10])

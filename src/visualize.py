@@ -46,3 +46,41 @@ def plot_avg_duration_by_genre(avg_durations):
     )
     fig.update_xaxes(tickangle=45)
     fig.show()
+
+def plot_release_year_distribution(year_counts):
+    
+    sorted_years = sorted(year_counts.items(), key=lambda x: x[0])
+    years = [item[0] for item in sorted_years]
+    counts = [item[1] for item in sorted_years]
+
+    fig = px.bar(
+        x=years,
+        y=counts,
+        labels={
+            "x": "Año",
+            "y": "Número de canciones"
+        },
+        title="Distribución de años de lanzamiento",
+        color_discrete_sequence=["#BADD13"],
+        template=theme
+    )
+    fig.show()
+
+def plot_top_artists(artist_counts):
+
+    artists = list(artist_counts.keys())
+    counts = list(artist_counts.values())
+
+    fig = px.bar(
+        x=artists,
+        y=counts,
+        labels={
+            "x": "Artista",
+            "y": "Número de Canciones"
+        },
+        title="Artistas más Frecuentes en la Playlist",
+        color_discrete_sequence=["#BADD13"],
+        template=theme
+    )
+    fig.update_xaxes(tickangle=45)
+    fig.show()
