@@ -37,7 +37,7 @@ def analyze_top_artists(songs):
         artist = song.get("artist", "Desconocido")
         artist_counts[artist] = artist_counts.get(artist, 0) + 1
 
-    return dict(sorted(artist_counts.items(), key=lambda x: x[1], reverse=True)[:30])
+    return dict(sorted(artist_counts.items(), key=lambda x: x[1], reverse=True)[:10])
 
 def get_top_genres_and_artists(songs, top_n=3):
     genres = [genre for song in songs for genre in song.get("genre", [])]
